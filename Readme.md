@@ -1,6 +1,6 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
-* Студент: [Дмитрий Котов](https://up.htmlacademy.ru/javascript/12/user/425695).
+* Студент: [Алексей Ляшневский](https://up.htmlacademy.ru/javascript/12/user/603093).
 * Наставник: `Неизвестно`.
 
 ---
