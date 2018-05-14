@@ -1,4 +1,5 @@
 'use strict';
+// часть первая
 var i;
 var comments = [
   'Всё отлично!',
@@ -48,7 +49,7 @@ var picturesElement = picturesTemplate.cloneNode(true);
   return picturesElement;
 };
 
-galleryOverlay.classList.remove('hidden');
+// galleryOverlay.classList.remove('hidden');
 
 // отрисовка owerlay галереи.
 function renderGaleryOverlay(advert) {
@@ -58,13 +59,38 @@ function renderGaleryOverlay(advert) {
   galleryOverlay.querySelector('.comments-count').textContent = advert.comments;
 }
 
-
 var fragment = document.createDocumentFragment();
 for (i = 1; i < 25; i++){
   fragment.appendChild(renderPictures(arr[i]));
   renderGaleryOverlay(arr[i]);
 }
 pictures.appendChild(fragment);
+
+// часть вторая
+var ESC = 27;
+var uploadOverlay = document.querySelector('.upload-overlay');
+var uploadFile = document.querySelector('#upload-file');
+var uploadFormCancel = document.querySelector('.upload-form-cancel');
+// отображение редактора фото , после того как фото было загружено.
+function uploadFileChangeHandler () {
+  uploadOverlay.classList.remove('hidden');
+}
+uploadFile.addEventListener('change',uploadFileChangeHandler);
+
+function escKeydownHandler(evt){
+  if(evt.keyCode === ESC){
+    uploadOverlay.classList.add('hidden');
+  }
+}
+document.addEventListener('keydown',escKeydownHandler);
+
+//закрытие редактора фото.
+function uploadFormCancelClickHandler() {
+  uploadOverlay.classList.add('hidden');
+}
+uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
+
+
 
 
 
