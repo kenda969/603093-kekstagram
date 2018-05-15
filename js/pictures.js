@@ -71,12 +71,14 @@ var ESC = 27;
 var uploadOverlay = document.querySelector('.upload-overlay');
 var uploadFile = document.querySelector('#upload-file');
 var uploadFormCancel = document.querySelector('.upload-form-cancel');
+
 // отображение редактора фото , после того как фото было загружено.
 function uploadFileChangeHandler () {
   uploadOverlay.classList.remove('hidden');
 }
 uploadFile.addEventListener('change',uploadFileChangeHandler);
 
+//закрытие редактора фото.
 function escKeydownHandler(evt){
   if(evt.keyCode === ESC){
     uploadOverlay.classList.add('hidden');
@@ -84,17 +86,22 @@ function escKeydownHandler(evt){
 }
 document.addEventListener('keydown',escKeydownHandler);
 
-//закрытие редактора фото.
 function uploadFormCancelClickHandler() {
   uploadOverlay.classList.add('hidden');
 }
 uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
 
+// Применение эффекта для избражений
+var uploadEffectLevel = document.querySelector('.upload-effect-level');
+var uploadEffectLevelPin = uploadEffectLevel.querySelector('.upload-effect-level-pin');
+var effectImagePreview = document.querySelector('.effect-image-preview');
 
 
 
+function uploadEffectLevellMouseupHandler(evt) {
+var  evt = evt.offsetX == undefined ? evt.layerX: evt.offsetX;
 
+  uploadEffectLevelPin.style.left = evt+'px';
 
-
-
-
+}
+uploadEffectLevel.addEventListener('mouseup', uploadEffectLevellMouseupHandler);
