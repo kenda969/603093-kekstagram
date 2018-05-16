@@ -75,7 +75,7 @@ var uploadFormCancel = document.querySelector('.upload-form-cancel');
 // отображение редактора фото , после того как фото было загружено.
 function uploadFileChangeHandler () {
   uploadOverlay.classList.remove('hidden');
-}
+};
 uploadFile.addEventListener('change',uploadFileChangeHandler);
 
 //закрытие редактора фото.
@@ -83,25 +83,41 @@ function escKeydownHandler(evt){
   if(evt.keyCode === ESC){
     uploadOverlay.classList.add('hidden');
   }
-}
+};
 document.addEventListener('keydown',escKeydownHandler);
 
 function uploadFormCancelClickHandler() {
   uploadOverlay.classList.add('hidden');
-}
+};
 uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
 
 // Применение эффекта для избражений
 var uploadEffectLevel = document.querySelector('.upload-effect-level');
 var uploadEffectLevelPin = uploadEffectLevel.querySelector('.upload-effect-level-pin');
 var effectImagePreview = document.querySelector('.effect-image-preview');
+var uploadEffectLevelVal = uploadEffectLevel.querySelector('.upload-effect-level-val');
+var uploadEffectControls = document.querySelector('.upload-effect-controls');
 
+effectImagePreview.className = 'effect-none';
+
+
+  function uploadEffectControlsClickHandler(evt) {
+  var evt = evt.target.value;
+  var effect = 'effect-' + evt;
+  if(evt){
+      effectImagePreview.className = effect;
+  }
+  return effect;
+};
+uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
 
 
 function uploadEffectLevellMouseupHandler(evt) {
 var  evt = evt.offsetX == undefined ? evt.layerX: evt.offsetX;
 
   uploadEffectLevelPin.style.left = evt+'px';
+  uploadEffectLevelVal.style.width = evt+'px';
 
-}
+};
 uploadEffectLevel.addEventListener('mouseup', uploadEffectLevellMouseupHandler);
+
