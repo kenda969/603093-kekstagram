@@ -47,7 +47,7 @@ var picturesElement = picturesTemplate.cloneNode(true);
   picturesElement.querySelector('.picture-likes').textContent = advert.likes;
   picturesElement.querySelector('.picture-comments').textContent = advert.comments;
   return picturesElement;
-};
+}
 
 // galleryOverlay.classList.remove('hidden');
 
@@ -75,7 +75,7 @@ var uploadFormCancel = document.querySelector('.upload-form-cancel');
 // отображение редактора фото , после того как фото было загружено.
 function uploadFileChangeHandler () {
   uploadOverlay.classList.remove('hidden');
-};
+}
 uploadFile.addEventListener('change',uploadFileChangeHandler);
 
 //закрытие редактора фото.
@@ -83,12 +83,12 @@ function escKeydownHandler(evt){
   if(evt.keyCode === ESC){
     uploadOverlay.classList.add('hidden');
   }
-};
+}
 document.addEventListener('keydown',escKeydownHandler);
 
 function uploadFormCancelClickHandler() {
   uploadOverlay.classList.add('hidden');
-};
+}
 uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
 
 // Применение эффекта для избражений
@@ -98,7 +98,7 @@ var effectImagePreview = document.querySelector('.effect-image-preview');
 var uploadEffectLevelVal = uploadEffectLevel.querySelector('.upload-effect-level-val');
 var uploadEffectControls = document.querySelector('.upload-effect-controls');
 
-effectImagePreview.className = 'effect-none';
+ effectImagePreview.className = 'effect-none';
 
 
   function uploadEffectControlsClickHandler(evt) {
@@ -106,15 +106,16 @@ effectImagePreview.className = 'effect-none';
   var className = 'effect-' + value;
   if(value){
       effectImagePreview.className = className;
-      effectImagePreview.style.filter = effectImageFilter(className) + '(0)';
-      console.log(effectImageFilter(className));
+      effectImagePreview.style.filter = effectImageFilter(className) + '('+ effectImageFilterSaturate(effectImageFilter(className)) +')';
+      console.log(effectImageFilter(className) + '('+ effectImageFilterSaturate(effectImageFilter(className)) +')');
   }
   return;
-};
+}
 uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
 
 function effectImageFilter (className) {
   var imageFilter;
+
   switch (className){
     case 'effect-chrome':
       imageFilter = 'grayscale';
@@ -134,22 +135,45 @@ function effectImageFilter (className) {
     case 'effect-none':
       imageFilter = '';
       break;
-    default:
-      imageFilter = '';
   }
   return imageFilter;
-};
+}
+function effectImageFilterSaturate(effectFilter) {
+  var saturate;
+
+  switch (effectFilter){
+    case 'grayscale':
+      saturate = 1;
+      break;
+    case 'sepia':
+      saturate = 1;
+      break;
+    case 'invert':
+      saturate = 100 + '%';
+      break;
+    case 'blur':
+      saturate = 5 + 'px';
+      break;
+    case 'brightness':
+      saturate = 3;
+      break;
+    case '':
+      saturate = '0';
+      break;
+  }
+  return saturate;
+}
 
 function uploadEffectLevellMouseupHandler(evt) {
 var  offsetX = evt.offsetX == undefined ? evt.layerX: evt.offsetX;
-window.className = effectImagePreview.className;
-  effectImagePreview.style.filter = effectImageFilter(window.className ) + '(0)';
+// var className = effectImagePreview.className;
+  // effectImagePreview.style.filter = effectImageFilter(className) + '(0)';
 
   uploadEffectLevelPin.style.left = offsetX+'px';
   uploadEffectLevelVal.style.width = offsetX+'px';
 
   return;
 
-};
+}
 uploadEffectLevel.addEventListener('mouseup', uploadEffectLevellMouseupHandler);
 
