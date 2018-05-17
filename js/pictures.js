@@ -102,21 +102,53 @@ effectImagePreview.className = 'effect-none';
 
 
   function uploadEffectControlsClickHandler(evt) {
-  var evt = evt.target.value;
-  var effect = 'effect-' + evt;
-  if(evt){
-      effectImagePreview.className = effect;
+  var value = evt.target.value;
+  var className = 'effect-' + value;
+  if(value){
+      effectImagePreview.className = className;
+      effectImagePreview.style.filter = effectImageFilter(className) + '(0)';
+      console.log(effectImageFilter(className));
   }
-  return effect;
+  return;
 };
 uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
 
+function effectImageFilter (className) {
+  var imageFilter;
+  switch (className){
+    case 'effect-chrome':
+      imageFilter = 'grayscale';
+      break;
+    case 'effect-sepia':
+      imageFilter = 'sepia';
+      break;
+    case 'effect-marvin':
+      imageFilter = 'invert';
+      break;
+    case 'effect-phobos':
+      imageFilter = 'blur';
+      break;
+    case 'effect-heat':
+      imageFilter = 'brightness';
+      break;
+    case 'effect-none':
+      imageFilter = '';
+      break;
+    default:
+      imageFilter = '';
+  }
+  return imageFilter;
+};
 
 function uploadEffectLevellMouseupHandler(evt) {
-var  evt = evt.offsetX == undefined ? evt.layerX: evt.offsetX;
+var  offsetX = evt.offsetX == undefined ? evt.layerX: evt.offsetX;
+window.className = effectImagePreview.className;
+  effectImagePreview.style.filter = effectImageFilter(window.className ) + '(0)';
 
-  uploadEffectLevelPin.style.left = evt+'px';
-  uploadEffectLevelVal.style.width = evt+'px';
+  uploadEffectLevelPin.style.left = offsetX+'px';
+  uploadEffectLevelVal.style.width = offsetX+'px';
+
+  return;
 
 };
 uploadEffectLevel.addEventListener('mouseup', uploadEffectLevellMouseupHandler);
