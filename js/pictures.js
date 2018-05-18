@@ -98,16 +98,15 @@ var effectImagePreview = document.querySelector('.effect-image-preview');
 var uploadEffectLevelVal = uploadEffectLevel.querySelector('.upload-effect-level-val');
 var uploadEffectControls = document.querySelector('.upload-effect-controls');
 
- effectImagePreview.className = 'effect-none';
-
-
   function uploadEffectControlsClickHandler(evt) {
   var value = evt.target.value;
-  var className = 'effect-' + value;
+  window.className = 'effect-' + value;
   if(value){
-      effectImagePreview.className = className;
-      effectImagePreview.style.filter = effectImageFilter(className) + '('+ effectImageFilterSaturate(effectImageFilter(className)) +')';
-      console.log(effectImageFilter(className) + '('+ effectImageFilterSaturate(effectImageFilter(className)) +')');
+      if(effectImageFilterSaturate(effectImageFilter(window.className)) == ''){
+        effectImagePreview.style.removeProperty('filter');
+      }else {
+        effectImagePreview.style.filter = effectImageFilter(window.className) + '('+ effectImageFilterSaturate(effectImageFilter(window.className)) +')';
+      }
   }
   return;
 }
@@ -133,7 +132,7 @@ function effectImageFilter (className) {
       imageFilter = 'brightness';
       break;
     case 'effect-none':
-      imageFilter = '';
+      imageFilter = 'none';
       break;
   }
   return imageFilter;
@@ -155,19 +154,45 @@ function effectImageFilterSaturate(effectFilter) {
       saturate = 5 + 'px';
       break;
     case 'brightness':
-      saturate = 3;
+      saturate = 300 + '%';
       break;
-    case '':
-      saturate = '0';
+    case 'none':
+      saturate = '';
       break;
   }
   return saturate;
 }
 
+function moveScrollPin(offsetX, effectFilter) {
+
+    var saturate;
+
+    switch (effectFilter){
+      case 'grayscale':
+        saturate = offsetX;
+        break;
+      case 'sepia':
+        saturate = offsetX;
+        break;
+      case 'invert':
+        saturate = offsetX + '%';
+        break;
+      case 'blur':
+        saturate = offsetX+ 'px';
+        break;
+      case 'brightness':
+        saturate = offsetX + '%';
+        break;
+      case 'none':
+        saturate = '';
+        break;
+    }
+    return saturate;
+
+}
+
 function uploadEffectLevellMouseupHandler(evt) {
 var  offsetX = evt.offsetX == undefined ? evt.layerX: evt.offsetX;
-// var className = effectImagePreview.className;
-  // effectImagePreview.style.filter = effectImageFilter(className) + '(0)';
 
   uploadEffectLevelPin.style.left = offsetX+'px';
   uploadEffectLevelVal.style.width = offsetX+'px';
