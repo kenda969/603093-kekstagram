@@ -92,6 +92,7 @@ function uploadFormCancelClickHandler() {
 uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
 
 // Применение эффекта для избражений
+var WIDTH_LINE = 495;
 var uploadEffectLevel = document.querySelector('.upload-effect-level');
 var uploadEffectLevelPin = uploadEffectLevel.querySelector('.upload-effect-level-pin');
 var uploadFormPreview = document.querySelector('.upload-form-preview > img');
@@ -140,13 +141,16 @@ function effectImageFilter (className) {
 }
 function effectImageFilterSaturate(effectFilter, numFilter) {
   var saturate;
+  var x;
 
   switch (effectFilter){
     case 'grayscale':
-      saturate = numFilter + '%';
+      x = numFilter / 100;
+      saturate = x.toPrecision(1);
       break;
     case 'sepia':
-      saturate = '.' + numFilter;
+      x = numFilter / 100;
+      saturate = x.toPrecision(1);
       break;
     case 'invert':
       saturate = numFilter + '%';
@@ -163,17 +167,23 @@ function effectImageFilterSaturate(effectFilter, numFilter) {
   }
   return saturate;
 }
+function getPercentageNum(percentageX,percentageFull) {
+var percentage = (percentageX / percentageFull) * 100;
+return percentage;
+}
 
 // Корректировака изображения.
 function uploadEffectLevellMouseupHandler(evt) {
-  var LEVEL_LINE = 495;
   var  offsetX = evt.offsetX == undefined ? evt.layerX: evt.offsetX;
-  var numFilter = (offsetX / LEVEL_LINE) * 100;
+  var numFilter = getPercentageNum(offsetX,WIDTH_LINE);
   var className = uploadFormPreview.className;
+
   uploadEffectLevelPin.style.left = offsetX + 'px';
   uploadEffectLevelVal.style.width = offsetX + 'px';
-  uploadFormPreview.style.filter = effectImageFilter(className) + '('+ effectImageFilterSaturate(effectImageFilter(className), Math.floor(numFilter)) +')';
-  console.log( effectImageFilter(className) + effectImageFilterSaturate(effectImageFilter(className), Math.floor(numFilter)));
+
+  uploadFormPreview.style.filter = effectImageFilter(className) +
+  '('+ effectImageFilterSaturate(effectImageFilter(className), Math.floor(numFilter)) +')';
+
   return;
 }
 uploadEffectLevel.addEventListener('mouseup', uploadEffectLevellMouseupHandler);
