@@ -207,3 +207,26 @@ function uploadEffectLevellMouseupHandler(evt) {
 }
 uploadEffectLevel.addEventListener('mouseup', uploadEffectLevellMouseupHandler);
 
+// Валидация формы.
+var uploadSubmit = document.querySelector('#upload-submit');
+var uploadFormHashtags = document.querySelector('.upload-form-hashtags');
+var uploadFormDescription = document.querySelector('.upload-form-description');
+
+// function uploadFormHashtagMax() {
+// 	uploadFormHashtags.max = 20;
+// 	uploadFormHashtags.required = 'required';
+// }
+// uploadFormHashtagMax();
+//
+// function uploadFormDescriptionMax() {
+// 	uploadFormDescription.max = 140;
+// }
+// uploadFormDescriptionMax();
+
+function uploadSubmitClickHandler(evt) {
+  var target = evt.target;
+  console.log(target);
+
+}
+
+uploadSubmit.addEventListener('click', uploadSubmitClickHandler);
