@@ -92,25 +92,44 @@ function uploadFormCancelClickHandler() {
 uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
 
 // Применение эффекта для избражений
+var WIDTH_LINE = 495;
 var uploadEffectLevel = document.querySelector('.upload-effect-level');
 var uploadEffectLevelPin = uploadEffectLevel.querySelector('.upload-effect-level-pin');
-var effectImagePreview = document.querySelector('.effect-image-preview');
+var uploadFormPreview = document.querySelector('.upload-form-preview > img');
 var uploadEffectLevelVal = uploadEffectLevel.querySelector('.upload-effect-level-val');
 var uploadEffectControls = document.querySelector('.upload-effect-controls');
 
+uploadEffectLevelPin.style.left = '0';
+uploadEffectLevelVal.style.width = '0';
+
   function uploadEffectControlsClickHandler(evt) {
   var value = evt.target.value;
-  window.className = 'effect-' + value;
+  var className = 'effect-' + value;
   if(value){
-      if(effectImageFilterSaturate(effectImageFilter(window.className)) == ''){
-        effectImagePreview.style.removeProperty('filter');
-      }else {
-        effectImagePreview.style.filter = effectImageFilter(window.className) + '('+ effectImageFilterSaturate(effectImageFilter(window.className)) +')';
+    uploadFormPreview.className = className;
+    uploadFormPreview.style.removeProperty('filter');
+    uploadEffectLevelPin.style.left = scrollDefaultPin(className);
+    uploadEffectLevelVal.style.width = scrollDefaultPin(className);
       }
-  }
   return;
 }
 uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
+  
+  function scrollDefaultPin(className) {
+    var posicionPin;
+    switch (className){
+      case 'effect-none':
+        posicionPin = '0';
+        break;
+      case 'effect-phobos':
+        posicionPin = '50%';
+        break;
+      default:
+        posicionPin = '100%';
+        break;
+    }
+    return posicionPin;
+  }
 
 function effectImageFilter (className) {
   var imageFilter;
@@ -137,24 +156,28 @@ function effectImageFilter (className) {
   }
   return imageFilter;
 }
-function effectImageFilterSaturate(effectFilter) {
+
+function effectImageFilterSaturate(effectFilter, numFilter) {
   var saturate;
+  var x;
 
   switch (effectFilter){
     case 'grayscale':
-      saturate = 1;
+      x = numFilter / 100;
+      saturate = x.toPrecision(1);
       break;
     case 'sepia':
-      saturate = 1;
+      x = numFilter / 100;
+      saturate = x.toPrecision(1);
       break;
     case 'invert':
-      saturate = 100 + '%';
+      saturate = numFilter + '%';
       break;
     case 'blur':
-      saturate = 5 + 'px';
+      saturate = numFilter / 10 + 'px';
       break;
     case 'brightness':
-      saturate = 300 + '%';
+      saturate = numFilter * 3 + '%';
       break;
     case 'none':
       saturate = '';
@@ -163,42 +186,24 @@ function effectImageFilterSaturate(effectFilter) {
   return saturate;
 }
 
-function moveScrollPin(offsetX, effectFilter) {
-
-    var saturate;
-
-    switch (effectFilter){
-      case 'grayscale':
-        saturate = offsetX;
-        break;
-      case 'sepia':
-        saturate = offsetX;
-        break;
-      case 'invert':
-        saturate = offsetX + '%';
-        break;
-      case 'blur':
-        saturate = offsetX+ 'px';
-        break;
-      case 'brightness':
-        saturate = offsetX + '%';
-        break;
-      case 'none':
-        saturate = '';
-        break;
-    }
-    return saturate;
-
+function percentageNum(percentageX,percentageFull) {
+var percentage = (percentageX / percentageFull) * 100;
+return percentage;
 }
 
+// Корректировака  насыщенности изображения.
 function uploadEffectLevellMouseupHandler(evt) {
-var  offsetX = evt.offsetX == undefined ? evt.layerX: evt.offsetX;
+  var  offsetX = evt.offsetX === undefined ? evt.layerX: evt.offsetX;
+  var numFilter = percentageNum(offsetX,WIDTH_LINE);
+  var className = uploadFormPreview.className;
 
-  uploadEffectLevelPin.style.left = offsetX+'px';
-  uploadEffectLevelVal.style.width = offsetX+'px';
+  uploadEffectLevelPin.style.left = offsetX + 'px';
+  uploadEffectLevelVal.style.width = offsetX + 'px';
+
+  uploadFormPreview.style.filter = effectImageFilter(className) +
+  '('+ effectImageFilterSaturate(effectImageFilter(className), Math.floor(numFilter)) +')';
 
   return;
-
 }
 uploadEffectLevel.addEventListener('mouseup', uploadEffectLevellMouseupHandler);
 
