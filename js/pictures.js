@@ -99,20 +99,37 @@ var uploadFormPreview = document.querySelector('.upload-form-preview > img');
 var uploadEffectLevelVal = uploadEffectLevel.querySelector('.upload-effect-level-val');
 var uploadEffectControls = document.querySelector('.upload-effect-controls');
 
+uploadEffectLevelPin.style.left = '0';
+uploadEffectLevelVal.style.width = '0';
+
   function uploadEffectControlsClickHandler(evt) {
   var value = evt.target.value;
   var className = 'effect-' + value;
   if(value){
     uploadFormPreview.className = className;
     uploadFormPreview.style.removeProperty('filter');
-    if (className === 'effect-none'){
-      uploadEffectLevelPin.style.left = '0';
-      uploadEffectLevelVal.style.width = '0';
-    }
+    uploadEffectLevelPin.style.left = scrollDefaultPin(className);
+    uploadEffectLevelVal.style.width = scrollDefaultPin(className);
       }
   return;
 }
 uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
+  
+  function scrollDefaultPin(className) {
+    var posicionPin;
+    switch (className){
+      case 'effect-none':
+        posicionPin = '0';
+        break;
+      case 'effect-phobos':
+        posicionPin = '50%';
+        break;
+      default:
+        posicionPin = '100%';
+        break;
+    }
+    return posicionPin;
+  }
 
 function effectImageFilter (className) {
   var imageFilter;
@@ -139,6 +156,7 @@ function effectImageFilter (className) {
   }
   return imageFilter;
 }
+
 function effectImageFilterSaturate(effectFilter, numFilter) {
   var saturate;
   var x;
@@ -167,15 +185,16 @@ function effectImageFilterSaturate(effectFilter, numFilter) {
   }
   return saturate;
 }
-function getPercentageNum(percentageX,percentageFull) {
+
+function percentageNum(percentageX,percentageFull) {
 var percentage = (percentageX / percentageFull) * 100;
 return percentage;
 }
 
-// Корректировака изображения.
+// Корректировака  насыщенности изображения.
 function uploadEffectLevellMouseupHandler(evt) {
-  var  offsetX = evt.offsetX == undefined ? evt.layerX: evt.offsetX;
-  var numFilter = getPercentageNum(offsetX,WIDTH_LINE);
+  var  offsetX = evt.offsetX === undefined ? evt.layerX: evt.offsetX;
+  var numFilter = percentageNum(offsetX,WIDTH_LINE);
   var className = uploadFormPreview.className;
 
   uploadEffectLevelPin.style.left = offsetX + 'px';
