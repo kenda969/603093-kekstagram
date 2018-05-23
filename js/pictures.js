@@ -103,9 +103,9 @@ uploadEffectLevelPin.style.left = '0';
 uploadEffectLevelVal.style.width = '0';
 
   function uploadEffectControlsClickHandler(evt) {
-  var value = evt.target.value;
-  var className = 'effect-' + value;
-  if(value){
+  var uploadEffectControlsValue = evt.target.value;
+  var className = 'effect-' + uploadEffectControlsValue;
+  if(uploadEffectControlsValue){
     uploadFormPreview.className = className;
     uploadFormPreview.style.removeProperty('filter');
     uploadEffectLevelPin.style.left = scrollDefaultPin(className);
@@ -212,21 +212,31 @@ var uploadSubmit = document.querySelector('#upload-submit');
 var uploadFormHashtags = document.querySelector('.upload-form-hashtags');
 var uploadFormDescription = document.querySelector('.upload-form-description');
 
-// function uploadFormHashtagMax() {
-// 	uploadFormHashtags.max = 20;
-// 	uploadFormHashtags.required = 'required';
-// }
-// uploadFormHashtagMax();
-//
-// function uploadFormDescriptionMax() {
-// 	uploadFormDescription.max = 140;
-// }
-// uploadFormDescriptionMax();
 
-function uploadSubmitClickHandler(evt) {
-  var target = evt.target;
-  console.log(target);
-
+// создание массива и подготовка валидатора.
+function setHashtags(uploadFormHashtagsValue ) {
+	var hashnags = uploadFormHashtagsValue.split(' ');
+	if(hashnags.length > 6){
+	  alert('тут вызывается метод setCustomValidity с отпределенном сообщением');
+	  return;
+  }
+	for (i = 0; i < hashnags.length; i++){
+		if(hashnags[i].length > 20) {
+			alert('Этот хэш тег ( ' + hashnags[i] + ') слишком длинный !!!');
+			return;
+		}
+	
+  }
+	return hashnags;
 }
 
-uploadSubmit.addEventListener('click', uploadSubmitClickHandler);
+
+function uploadFormHashtagsChangeHandler() {
+  var uploadFormHashtagsValue = this.value;
+ var arr = setHashtags(uploadFormHashtagsValue);
+  
+  console.log(arr);
+}
+uploadFormHashtags.addEventListener('change', uploadFormHashtagsChangeHandler);
+
+
