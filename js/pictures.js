@@ -212,30 +212,44 @@ var uploadSubmit = document.querySelector('#upload-submit');
 var uploadFormHashtags = document.querySelector('.upload-form-hashtags');
 var uploadFormDescription = document.querySelector('.upload-form-description');
 
+// Проверка длинны массива. Не более 5 хэштэгов.
+function checkLengthArray(arr) {
+	if(arr.length > 5){
+		alert('тут вызывается метод setCustomValidity с отпределенном сообщением');
+	}
+};
 
-// создание массива и подготовка валидатора.
-function setHashtags(uploadFormHashtagsValue ) {
-	var hashnags = uploadFormHashtagsValue.split(' ');
-	if(hashnags.length > 6){
-	  alert('тут вызывается метод setCustomValidity с отпределенном сообщением');
-	  return;
-  }
-	for (i = 0; i < hashnags.length; i++){
-		if(hashnags[i].length > 20) {
-			alert('Этот хэш тег ( ' + hashnags[i] + ') слишком длинный !!!');
-			return;
+// Проверка длинны  элементов массива. Не более 20 символов..
+function checkLengthArrayElement(arr) {
+	for (i = 0; i < arr.length; i++) {
+		if (arr[i].length > 20) {
+			alert('Этот хэш тег ( ' + arr[i] + ') слишком длинный !!!');
 		}
-	
-  }
-	return hashnags;
+	}
 }
+
+// Проверка элементов массива на идентичные записи.
+function checkMatchingArrayElement(arr) {
+	for (i = 0; i < arr.length; i++) {
+		var hashtagsLoverCase = arr[i].toLowerCase();
+		for (var y = i; y < hashtagsLoverCase.length; y++) {
+			if (i !== y) {
+				if (hashtagsLoverCase[i] === hashtagsLoverCase[y]) {
+					alert('хэштэг ' + arr[i] + ' и ' + 'хэштэг ' + arr[y] + ' одинаковые');
+				}
+			}
+		}
+	}
+};
 
 
 function uploadFormHashtagsChangeHandler() {
-  var uploadFormHashtagsValue = this.value;
- var arr = setHashtags(uploadFormHashtagsValue);
+  var uploadFormHashtagsValue = this.value.split(' ');
+  checkLengthArray(uploadFormHashtagsValue);
+  checkLengthArrayElement(uploadFormHashtagsValue);
+  checkMatchingArrayElement(uploadFormHashtagsValue);
   
-  console.log(arr);
+  
 }
 uploadFormHashtags.addEventListener('change', uploadFormHashtagsChangeHandler);
 
