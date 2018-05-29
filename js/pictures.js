@@ -115,7 +115,7 @@ uploadEffectLevelVal.style.width = '0';
 }
 uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
   
-  function scrollDefaultPin(className) {
+function scrollDefaultPin(className) {
     var posicionPin;
     switch (className){
       case 'effect-none':
@@ -228,29 +228,31 @@ function checkLengthArrayElement(arr) {
 	}
 }
 
-// Проверка элементов массива на идентичные записи.
+// Проверка элементов массива на идентичные записи не регистрозависимые..
 function checkMatchingArrayElement(arr) {
-	for (i = 0; i < arr.length; i++) {
-		var hashtagsLoverCase = arr[i].toLowerCase();
-		for (var y = i; y < hashtagsLoverCase.length; y++) {
-			if (i !== y) {
-				if (hashtagsLoverCase[i] === hashtagsLoverCase[y]) {
-					alert('хэштэг ' + arr[i] + ' и ' + 'хэштэг ' + arr[y] + ' одинаковые');
-				}
-			}
-		}
-	}
+  var hashtagsCoincidence = [];
+	arr.forEach(function(val, index){
+	  var hashtags = val.toLowerCase();
+		if(index !== arr.lastIndexOf(hashtags) && hashtagsCoincidence.indexOf(hashtags) === -1)
+			hashtagsCoincidence.push(hashtags);
+	});
+	if(hashtagsCoincidence.length !== 0){
+		alert('Имеются одинаковые хэштеги!!!');
+  }
 };
-
 
 function uploadFormHashtagsChangeHandler() {
   var uploadFormHashtagsValue = this.value.split(' ');
   checkLengthArray(uploadFormHashtagsValue);
   checkLengthArrayElement(uploadFormHashtagsValue);
   checkMatchingArrayElement(uploadFormHashtagsValue);
-  
-  
 }
 uploadFormHashtags.addEventListener('change', uploadFormHashtagsChangeHandler);
 
+// Отправка данных на сервер.
+function  uploadSubmitClickHandler() {
+  uploadSubmit.preventDefault();
+	uploadFormHashtags.addEventListener('change', uploadFormHashtagsChangeHandler);
+}
+uploadSubmit.addEventListener('click', uploadSubmitClickHandler);
 
