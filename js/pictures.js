@@ -215,8 +215,12 @@ var uploadFormDescription = document.querySelector('.upload-form-description');
 // Проверка длинны массива. Не более 5 хэштэгов.
 function checkLengthArray(arr) {
 	if(arr.length > 5){
-		alert('тут вызывается метод setCustomValidity с отпределенном сообщением');
-	}
+		uploadFormHashtags.setCustomValidity('Должно быть не больше 5 хэштегов!!!');
+		uploadFormHashtags.style.border = '2px solid red';
+	} else {
+		uploadFormHashtags.style.border = 'none';
+  }
+	
 };
 
 // Проверка длинны  элементов массива. Не более 20 символов..
@@ -255,4 +259,5 @@ function  uploadSubmitClickHandler() {
 	uploadFormHashtags.addEventListener('change', uploadFormHashtagsChangeHandler);
 }
 uploadSubmit.addEventListener('click', uploadSubmitClickHandler);
+
 
