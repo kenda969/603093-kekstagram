@@ -114,7 +114,7 @@ uploadEffectLevelVal.style.width = '0';
   return;
 }
 uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
-  
+
 function scrollDefaultPin(className) {
     var posicionPin;
     switch (className){
@@ -216,11 +216,11 @@ var uploadFormDescription = document.querySelector('.upload-form-description');
 function checkLengthArray(arr) {
 	if(arr.length > 5){
 		uploadFormHashtags.setCustomValidity('Должно быть не больше 5 хэштегов!!!');
-		uploadFormHashtags.style.border = '2px solid red';
+		uploadFormHashtags.style.borderColor = 'red';
 	} else {
-		uploadFormHashtags.style.border = 'none';
+		uploadFormHashtags.style.borderColor = '';
   }
-	
+
 };
 
 // Проверка длинны  элементов массива. Не более 20 символов..
@@ -245,6 +245,7 @@ function checkMatchingArrayElement(arr) {
   }
 };
 
+// Обработка Хэштэгов на валидность в поле хэштэг
 function uploadFormHashtagsChangeHandler() {
   var uploadFormHashtagsValue = this.value.split(' ');
   checkLengthArray(uploadFormHashtagsValue);
@@ -253,6 +254,16 @@ function uploadFormHashtagsChangeHandler() {
 }
 uploadFormHashtags.addEventListener('change', uploadFormHashtagsChangeHandler);
 
+
+uploadFormDescription.maxlenght = 200;
+
+// Обработка коментария на валидность.
+ function uploadFormDescriptionChangeHandler (){
+   var uploadFormDescriptionValue = this.value;
+   console.log(uploadFormDescriptionValue);
+
+ }
+uploadFormDescription.addEventListener('change',uploadFormDescriptionChangeHandler)
 // Отправка данных на сервер.
 function  uploadSubmitClickHandler() {
   uploadSubmit.preventDefault();
