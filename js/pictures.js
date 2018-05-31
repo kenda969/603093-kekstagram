@@ -220,8 +220,7 @@ function checkLengthArray(arr) {
 	} else {
 		uploadFormHashtags.style.borderColor = '';
   }
-
-};
+}
 
 // Проверка длинны  элементов массива. Не более 20 символов..
 function checkLengthArrayElement(arr) {
@@ -254,16 +253,28 @@ function uploadFormHashtagsChangeHandler() {
 }
 uploadFormHashtags.addEventListener('change', uploadFormHashtagsChangeHandler);
 
-
-uploadFormDescription.maxlenght = 200;
-
 // Обработка коментария на валидность.
  function uploadFormDescriptionChangeHandler (){
    var uploadFormDescriptionValue = this.value;
-   console.log(uploadFormDescriptionValue);
-
+   if (uploadFormDescriptionValue.length > 140){
+     // alert('Ваш комментарий слишком большой!!!');
+     uploadFormDescription.style.borderColor = 'red';
+   }else {
+     uploadFormDescription.style.borderColor = '';
+   }
  }
-uploadFormDescription.addEventListener('change',uploadFormDescriptionChangeHandler)
+uploadFormDescription.addEventListener('change',uploadFormDescriptionChangeHandler);
+
+ // Отмена события по нажатию на кнопку ESC при фокусе в поле комментарий.
+uploadFormDescription.addEventListener('focus', function () {
+  document.removeEventListener('keydown',escKeydownHandler);
+});
+
+// Возврат события по нажатию на кнопку ESC при потере фокуса поля комментария.
+uploadFormDescription.addEventListener('blur', function () {
+  document.addEventListener('keydown',escKeydownHandler);
+});
+
 // Отправка данных на сервер.
 function  uploadSubmitClickHandler() {
   uploadSubmit.preventDefault();
