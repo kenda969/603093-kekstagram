@@ -91,6 +91,45 @@ function uploadFormCancelClickHandler() {
 }
 uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
 
+//Редактирование размера фотографии.
+var sizeDefault = 55;
+var uploadResizeControls = document.querySelector('.upload-resize-controls')
+ var uploadResizeControlsButtonDec = 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-dec';
+ var uploadResizeControlsButtonInc = 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-inc';
+ var uploadResizeControlsValue = uploadResizeControls.querySelector('.upload-resize-controls-value');
+ var uploadFormPreviewContainer = document.querySelector('.upload-form-preview');
+ 
+ uploadFormPreviewContainer.style.width = '586px';
+ uploadFormPreviewContainer.style.height = '586px';
+ uploadFormPreviewContainer.style.overflow = 'hidden';
+
+ uploadFormPreviewContainer.style.border = '1px solid #715F10';
+
+ function resizeImage (sizeToProcent) {
+	 uploadFormPreview.style.width = 45 +  sizeToProcent + '%';
+	 uploadFormPreview.style.height = 45 +  sizeToProcent + '%';
+
+	 
+  
+	 
+ }
+ 
+
+function uploadResizeControlsClickHandler(evt) {
+	 var className = evt.target.className;
+	 
+	 if(className === uploadResizeControlsButtonInc){
+	   sizeDefault !== 100 ? sizeDefault +=5:sizeDefault = 100;
+     uploadResizeControlsValue.value = sizeDefault + '%';
+   }else if (className === uploadResizeControlsButtonDec){
+		 sizeDefault === 0 ? sizeDefault = 0:sizeDefault -= 5;
+		 uploadResizeControlsValue.value = sizeDefault + '%';
+   }
+   resizeImage(sizeDefault);
+ }
+ uploadResizeControls.addEventListener('click',  uploadResizeControlsClickHandler);
+
+
 // Применение эффекта для избражений
 var WIDTH_LINE = 495;
 var uploadEffectLevel = document.querySelector('.upload-effect-level');
