@@ -226,21 +226,56 @@ var percentage = (percentageX / percentageFull) * 100;
 return percentage;
 }
 
-// Корректировака  насыщенности изображения.
-function uploadEffectLevellMouseupHandler(evt) {
-  var  offsetX = evt.offsetX === undefined ? evt.layerX: evt.offsetX;
-  var numFilter = percentageNum(offsetX,WIDTH_LINE);
-  var className = uploadFormPreview.className;
+// Перетаскивание пина
 
-  uploadEffectLevelPin.style.left = offsetX + 'px';
-  uploadEffectLevelVal.style.width = offsetX + 'px';
+function uploadEffectLevelPinMousedovn(evt) {
+	evt.preventDefault();
+	
+	var beginCoords = {
+		x: evt.clientX,
+		y: evt.clientY
+	};
+	var dragged = false;
+	
+	function uploadEffectLevelPinMousemove(moveEvt) {
+		moveEvt.preventDefault();
+		dragged = true;
+		var shift = {
+			x: beginCoords.x - moveEvt.clientX,
+			y: beginCoords.y - moveEvt.clientY
+		};
+  
+		beginCoords = {
+			x: moveEvt.clientX,
+			y: moveEvt.clientY
+		};
+  
+    uploadEffectLevelPin.style.left = 	uploadEffectLevelPin.offsetLeft - shift.x +'px';
+		uploadEffectLevelVal.style.width = 	uploadEffectLevelPin.offsetLeft - shift.x +'px';
+		// uploadEffectLevelPin.style.top = uploadEffectLevelPin.offsetTop - shift.y +'px';
+	
+	}
+	function uploadEffectLevelPinMouseupHandler(upEvt) {
+		upEvt.preventDefault();
 
-  uploadFormPreview.style.filter = effectImageFilter(className) +
-  '('+ effectImageFilterSaturate(effectImageFilter(className), Math.floor(numFilter)) +')';
-
-  return;
+		// var numFilter = percentageNum(offsetX,WIDTH_LINE);
+		// var className = uploadFormPreview.className;
+  
+		
+		// uploadFormPreview.style.filter = effectImageFilter(className) +
+		// '('+ effectImageFilterSaturate(effectImageFilter(className), Math.floor(numFilter)) +')';
+		
+		document.removeEventListener('mousemove',uploadEffectLevelPinMousemove);
+		document.removeEventListener('mouseup', uploadEffectLevelPinMouseupHandler);
+	}
+	document.addEventListener('mousemove',uploadEffectLevelPinMousemove);
+	document.addEventListener('mouseup', uploadEffectLevelPinMouseupHandler);
 }
-uploadEffectLevel.addEventListener('mouseup', uploadEffectLevellMouseupHandler);
+uploadEffectLevelPin.addEventListener('mousedown', uploadEffectLevelPinMousedovn );
+
+
+
+
 
 // Валидация формы.
 var uploadSubmit = document.querySelector('#upload-submit');
