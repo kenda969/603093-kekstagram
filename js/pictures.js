@@ -108,10 +108,6 @@ var uploadResizeControls = document.querySelector('.upload-resize-controls')
  function resizeImage (sizeToProcent) {
 	 uploadFormPreview.style.width = 45 +  sizeToProcent + '%';
 	 uploadFormPreview.style.height = 45 +  sizeToProcent + '%';
-
-	 
-  
-	 
  }
  
 
