@@ -127,8 +127,9 @@ function uploadResizeControlsClickHandler(evt) {
 
 
 // Применение эффекта для избражений
-var WIDTH_LINE = 495;
+var PIN_WIDTH = 18;
 var uploadEffectLevel = document.querySelector('.upload-effect-level');
+var uploadEffectLevelLine = document.querySelector('.upload-effect-level-line');
 var uploadEffectLevelPin = uploadEffectLevel.querySelector('.upload-effect-level-pin');
 var uploadFormPreview = document.querySelector('.upload-form-preview > img');
 var uploadEffectLevelVal = uploadEffectLevel.querySelector('.upload-effect-level-val');
@@ -250,20 +251,25 @@ function uploadEffectLevelPinMousedovn(evt) {
 			y: moveEvt.clientY
 		};
   
-    uploadEffectLevelPin.style.left = 	uploadEffectLevelPin.offsetLeft - shift.x +'px';
-		uploadEffectLevelVal.style.width = 	uploadEffectLevelPin.offsetLeft - shift.x +'px';
-		// uploadEffectLevelPin.style.top = uploadEffectLevelPin.offsetTop - shift.y +'px';
-	
+    uploadEffectLevelPin.style.left = uploadEffectLevelPin.offsetLeft - shift.x +'px';
+		uploadEffectLevelVal.style.width = uploadEffectLevelPin.offsetLeft - shift.x +'px';
+
+    var numFilter = percentageNum(uploadEffectLevelPin.offsetLeft - shift.x,uploadEffectLevelLine.offsetWidth - (PIN_WIDTH / 2));
+    var className = uploadFormPreview.className;
+    uploadFormPreview.style.filter = effectImageFilter(className) +
+      '('+ effectImageFilterSaturate(effectImageFilter(className), Math.floor(numFilter)) +')';
+
+    if (uploadEffectLevelPin.offsetLeft - shift.x < PIN_WIDTH / 2){
+      uploadEffectLevelPin.style.left = PIN_WIDTH / 2 +'px';
+      uploadEffectLevelVal.style.width = PIN_WIDTH / 2 +'px';
+    }else if(uploadEffectLevelPin.offsetLeft - shift.x > uploadEffectLevelLine.offsetWidth - (PIN_WIDTH / 2)){
+      uploadEffectLevelPin.style.left = uploadEffectLevelLine.offsetWidth - (PIN_WIDTH / 2) + 'px';
+      uploadEffectLevelVal.style.width = uploadEffectLevelLine.offsetWidth - (PIN_WIDTH / 2) + 'px';
+    }
+
 	}
 	function uploadEffectLevelPinMouseupHandler(upEvt) {
 		upEvt.preventDefault();
-
-		// var numFilter = percentageNum(offsetX,WIDTH_LINE);
-		// var className = uploadFormPreview.className;
-  
-		
-		// uploadFormPreview.style.filter = effectImageFilter(className) +
-		// '('+ effectImageFilterSaturate(effectImageFilter(className), Math.floor(numFilter)) +')';
 		
 		document.removeEventListener('mousemove',uploadEffectLevelPinMousemove);
 		document.removeEventListener('mouseup', uploadEffectLevelPinMouseupHandler);
@@ -272,10 +278,6 @@ function uploadEffectLevelPinMousedovn(evt) {
 	document.addEventListener('mouseup', uploadEffectLevelPinMouseupHandler);
 }
 uploadEffectLevelPin.addEventListener('mousedown', uploadEffectLevelPinMousedovn );
-
-
-
-
 
 // Валидация формы.
 var uploadSubmit = document.querySelector('#upload-submit');
@@ -312,7 +314,7 @@ function checkMatchingArrayElement(arr) {
 	if(hashtagsCoincidence.length !== 0){
 		alert('Имеются одинаковые хэштеги!!!');
   }
-};
+}
 
 // Обработка Хэштэгов на валидность в поле хэштэг
 function uploadFormHashtagsChangeHandler() {
