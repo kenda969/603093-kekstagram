@@ -91,6 +91,41 @@ function uploadFormCancelClickHandler() {
 }
 uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
 
+//Редактирование размера фотографии.
+var sizeDefault = 55;
+var uploadResizeControls = document.querySelector('.upload-resize-controls')
+ var uploadResizeControlsButtonDec = 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-dec';
+ var uploadResizeControlsButtonInc = 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-inc';
+ var uploadResizeControlsValue = uploadResizeControls.querySelector('.upload-resize-controls-value');
+ var uploadFormPreviewContainer = document.querySelector('.upload-form-preview');
+ 
+ uploadFormPreviewContainer.style.width = '586px';
+ uploadFormPreviewContainer.style.height = '586px';
+ uploadFormPreviewContainer.style.overflow = 'hidden';
+
+ uploadFormPreviewContainer.style.border = '1px solid #715F10';
+
+ function resizeImage (sizeToProcent) {
+	 uploadFormPreview.style.width = 45 +  sizeToProcent + '%';
+	 uploadFormPreview.style.height = 45 +  sizeToProcent + '%';
+ }
+ 
+
+function uploadResizeControlsClickHandler(evt) {
+	 var className = evt.target.className;
+	 
+	 if(className === uploadResizeControlsButtonInc){
+	   sizeDefault !== 100 ? sizeDefault +=5:sizeDefault = 100;
+     uploadResizeControlsValue.value = sizeDefault + '%';
+   }else if (className === uploadResizeControlsButtonDec){
+		 sizeDefault === 0 ? sizeDefault = 0:sizeDefault -= 5;
+		 uploadResizeControlsValue.value = sizeDefault + '%';
+   }
+   resizeImage(sizeDefault);
+ }
+ uploadResizeControls.addEventListener('click',  uploadResizeControlsClickHandler);
+
+
 // Применение эффекта для избражений
 var WIDTH_LINE = 495;
 var uploadEffectLevel = document.querySelector('.upload-effect-level');
@@ -103,9 +138,9 @@ uploadEffectLevelPin.style.left = '0';
 uploadEffectLevelVal.style.width = '0';
 
   function uploadEffectControlsClickHandler(evt) {
-  var value = evt.target.value;
-  var className = 'effect-' + value;
-  if(value){
+  var uploadEffectControlsValue = evt.target.value;
+  var className = 'effect-' + uploadEffectControlsValue;
+  if(uploadEffectControlsValue){
     uploadFormPreview.className = className;
     uploadFormPreview.style.removeProperty('filter');
     uploadEffectLevelPin.style.left = scrollDefaultPin(className);
@@ -114,8 +149,8 @@ uploadEffectLevelVal.style.width = '0';
   return;
 }
 uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
-  
-  function scrollDefaultPin(className) {
+
+function scrollDefaultPin(className) {
     var posicionPin;
     switch (className){
       case 'effect-none':
@@ -206,4 +241,80 @@ function uploadEffectLevellMouseupHandler(evt) {
   return;
 }
 uploadEffectLevel.addEventListener('mouseup', uploadEffectLevellMouseupHandler);
+
+// Валидация формы.
+var uploadSubmit = document.querySelector('#upload-submit');
+var uploadFormHashtags = document.querySelector('.upload-form-hashtags');
+var uploadFormDescription = document.querySelector('.upload-form-description');
+
+// Проверка длинны массива. Не более 5 хэштэгов.
+function checkLengthArray(arr) {
+	if(arr.length > 5){
+		uploadFormHashtags.setCustomValidity('Должно быть не больше 5 хэштегов!!!');
+		uploadFormHashtags.style.borderColor = 'red';
+	} else {
+		uploadFormHashtags.style.borderColor = '';
+  }
+}
+
+// Проверка длинны  элементов массива. Не более 20 символов..
+function checkLengthArrayElement(arr) {
+	for (i = 0; i < arr.length; i++) {
+		if (arr[i].length > 20) {
+			alert('Этот хэш тег ( ' + arr[i] + ') слишком длинный !!!');
+		}
+	}
+}
+
+// Проверка элементов массива на идентичные записи не регистрозависимые..
+function checkMatchingArrayElement(arr) {
+  var hashtagsCoincidence = [];
+	arr.forEach(function(val, index){
+	  var hashtags = val.toLowerCase();
+		if(index !== arr.lastIndexOf(hashtags) && hashtagsCoincidence.indexOf(hashtags) === -1)
+			hashtagsCoincidence.push(hashtags);
+	});
+	if(hashtagsCoincidence.length !== 0){
+		alert('Имеются одинаковые хэштеги!!!');
+  }
+};
+
+// Обработка Хэштэгов на валидность в поле хэштэг
+function uploadFormHashtagsChangeHandler() {
+  var uploadFormHashtagsValue = this.value.split(' ');
+  checkLengthArray(uploadFormHashtagsValue);
+  checkLengthArrayElement(uploadFormHashtagsValue);
+  checkMatchingArrayElement(uploadFormHashtagsValue);
+}
+uploadFormHashtags.addEventListener('change', uploadFormHashtagsChangeHandler);
+
+// Обработка коментария на валидность.
+ function uploadFormDescriptionChangeHandler (){
+   var uploadFormDescriptionValue = this.value;
+   if (uploadFormDescriptionValue.length > 140){
+     // alert('Ваш комментарий слишком большой!!!');
+     uploadFormDescription.style.borderColor = 'red';
+   }else {
+     uploadFormDescription.style.borderColor = '';
+   }
+ }
+uploadFormDescription.addEventListener('change',uploadFormDescriptionChangeHandler);
+
+ // Отмена события по нажатию на кнопку ESC при фокусе в поле комментарий.
+uploadFormDescription.addEventListener('focus', function () {
+  document.removeEventListener('keydown',escKeydownHandler);
+});
+
+// Возврат события по нажатию на кнопку ESC при потере фокуса поля комментария.
+uploadFormDescription.addEventListener('blur', function () {
+  document.addEventListener('keydown',escKeydownHandler);
+});
+
+// Отправка данных на сервер.
+function  uploadSubmitClickHandler() {
+  uploadSubmit.preventDefault();
+	uploadFormHashtags.addEventListener('change', uploadFormHashtagsChangeHandler);
+}
+uploadSubmit.addEventListener('click', uploadSubmitClickHandler);
+
 
