@@ -24,7 +24,7 @@
 
 //Редактирование размера фотографии.
 	var sizeDefault = 50;
-	var uploadResizeControls = document.querySelector('.upload-resize-controls')
+	var uploadResizeControls = document.querySelector('.upload-resize-controls');
 	var uploadResizeControlsButtonDec = 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-dec';
 	var uploadResizeControlsButtonInc = 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-inc';
 	var uploadResizeControlsValue = uploadResizeControls.querySelector('.upload-resize-controls-value');
@@ -37,7 +37,7 @@
 		var className = evt.target.className;
 		
 		if(className === uploadResizeControlsButtonInc){
-			sizeDefault !== 100 ? sizeDefault +=25:sizeDefault = 100;
+			sizeDefault !== 100 ? sizeDefault += 25:sizeDefault = 100;
 			uploadResizeControlsValue.value = sizeDefault + '%';
 		}else if (className === uploadResizeControlsButtonDec){
 			sizeDefault <= 25 ? sizeDefault = 25:sizeDefault -= 25;

@@ -4,7 +4,7 @@
 	var i;
 	var obj;
 	var arr = [];
-	var  pictures = document.querySelector('.pictures ');
+	var pictures = document.querySelector('.pictures ');
 
 // рандомное значение из массива.
 	function randonElement(rand) {
@@ -37,6 +37,6 @@
 		window.renderGaleryOverlay(arr[i]);
 	}
 	pictures.appendChild(fragment);
-	
+
 })();
 
