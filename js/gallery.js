@@ -34,7 +34,7 @@
 	var fragment = document.createDocumentFragment();
 	for (i = 1; i < 25; i++){
 		fragment.appendChild(window.renderPictures(arr[i]));
-		window.renderGaleryOverlay(arr[i]);
+	
 	}
 	pictures.appendChild(fragment);
 

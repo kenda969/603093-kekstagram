@@ -13,20 +13,22 @@
 		galleryOverlay.querySelector('.likes-count').textContent = advert.likes;
 		galleryOverlay.querySelector('.comments-count').textContent = advert.comments;
 	}
+	
+	
   function qwe(evt) {
 		evt.preventDefault();
 		var target = evt.target;
-
+var ad = {
+	url: target.src,
+	comments: target.parentNode.children['1'].children['0'].innerText,
+	likes: target.parentNode.children['1'].children['1'].innerText
+}
 if(target.tagName === 'IMG'){
-  console.log(target.tagName);
-  console.log(target.src);
-  console.log(target.parentElement.text);
+	window.renderGaleryOverlay(ad);
   galleryOverlay.style.display ='block';
 }else {
 return;
 }
-
-
   }
   container.addEventListener('click', qwe);
   // footer-logo-image
