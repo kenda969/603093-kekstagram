@@ -1,4 +1,3 @@
-'use strict';
 (function () {
 	// часть первая
 	var i;

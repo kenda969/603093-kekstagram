@@ -1,3 +1,4 @@
+'use strict';
 (function () {
 	var  CONST = {
 		ESC:   27,
