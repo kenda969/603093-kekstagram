@@ -1,8 +1,9 @@
 'use strict';
 (function () {
 	var  CONST = {
-		ESC:   27,
-		PIN_WIDTH: 18
+		ESC: 27,
+		PIN_WIDTH: 18,
+		URL: 'https://js.dump.academy/kekstagram'
 	};
 	
 	var arrays = {
@@ -14,12 +15,13 @@
 			'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
 			'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 		]
-	}
+	};
 
 	
 	window.data = {
 		ESC: CONST.ESC,
 		PIN_WIDTH: CONST.PIN_WIDTH,
+		URL: CONST.URL,
 		comments: arrays.comments
 	}
 })();

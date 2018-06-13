@@ -12,11 +12,11 @@
 	}
 // рандомное число min max.
 	function randomInteger(min, max) {
-		var randInt = min - 0.5 + Math.random() * (max - min + 1)
+		var randInt = min - 0.5 + Math.random() * (max - min + 1);
 		randInt = Math.round(randInt);
 		return randInt;
 	};
-
+window.backend.load();
 // создание массива объектов.
 	function  photos(num) {
 		for(i = 1; i<= num; i++){
