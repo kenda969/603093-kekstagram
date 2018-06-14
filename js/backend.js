@@ -1,5 +1,5 @@
 (function () {
-function dataRequest ( errorHandler) {
+function dataRequest (loadHandler, errorHandler) {
   var xhr = new XMLHttpRequest();
   xhr.responseType = 'json';
   xhr.timeout = 20000;
@@ -8,7 +8,7 @@ function dataRequest ( errorHandler) {
     var error;
     switch (xhr.status){
       case 200:
-        xhr.response;
+        loadHandler(xhr.response);
         break;
       case 400:
         error = 'неверный запрос';
@@ -32,8 +32,8 @@ function dataRequest ( errorHandler) {
   });
   return xhr;
 }
-  function load( errorHandler) {
-  var xhr  = dataRequest( errorHandler);
+  function load(loadHandler, errorHandler) {
+  var xhr  = dataRequest(loadHandler, errorHandler);
   xhr.open('GET',data.URL + '/data');
   xhr.send();
   }
