@@ -204,4 +204,20 @@
 	window.form = {
 		escKeydownHandler: escKeydownHandler
 	}
+	
+	
+	var uploadFormSubmit = document.querySelector('.upload-form');
+	uploadFormSubmit.getAttribute = 'action = ' + window.data.URL;
+	
+	function displaySendingMessage() {
+		alert('Данные добавлены!!!');
+	}
+	
+	function uploadFofmSubmitHandler(evt) {
+		evt.preventDefault();
+		var data = new FormData(uploadFormSubmit);
+		window.backend.save(data, displaySendingMessage, window.gallery.errorMessage);
+	}
+	uploadFormSubmit.addEventListener('submit', uploadFofmSubmitHandler);
+	
 })();

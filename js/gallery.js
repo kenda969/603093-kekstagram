@@ -1,12 +1,10 @@
 (function () {
 	// часть первая
 	var pictures = document.querySelector('.pictures ');
-function errorMessage() {
-	alert('qwe');
+function errorMessage(error) {
+	alert(error);
 }
-
-window.backend.load(loadData,errorMessage);
-
+	
 	var fragment = document.createDocumentFragment();
 	function loadData(advert) {
     for (var i = 1; i < advert.length; i++){
@@ -14,5 +12,12 @@ window.backend.load(loadData,errorMessage);
     }
     pictures.appendChild(fragment);
   }
+	
+	window.backend.load(loadData,errorMessage);
+	
+	window.gallery = {
+		errorMessage: errorMessage
+	}
+	
 })();
 

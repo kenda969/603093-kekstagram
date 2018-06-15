@@ -37,8 +37,15 @@ function dataRequest (loadHandler, errorHandler) {
   xhr.open('GET',data.URL + '/data');
   xhr.send();
   }
+  
+  function save(data, loadHandler, errorHandler) {
+  var xhr  = dataRequest(loadHandler, errorHandler);
+  xhr.open('POST', data.URL );
+  xhr.send(data);
+  }
   window.backend = {
-  load: load
+  load: load,
+  save: save
   };
 
 })();
