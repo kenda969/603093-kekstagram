@@ -38,10 +38,10 @@ function dataRequest (loadHandler, errorHandler) {
   xhr.send();
   }
   
-  function save(data, loadHandler, errorHandler) {
+  function save(datas, loadHandler, errorHandler) {
   var xhr  = dataRequest(loadHandler, errorHandler);
-  xhr.open('POST', data.URL );
-  xhr.send(data);
+  xhr.open('POST',data.URL);
+  xhr.send(datas);
   }
   window.backend = {
   load: load,

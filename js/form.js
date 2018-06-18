@@ -201,13 +201,9 @@
 	}
 	uploadEffectLevelPin.addEventListener('mousedown', uploadEffectLevelPinMousedovn );
 	
-	window.form = {
-		escKeydownHandler: escKeydownHandler
-	}
-	
+
 	
 	var uploadFormSubmit = document.querySelector('.upload-form');
-	uploadFormSubmit.getAttribute = 'action = ' + window.data.URL;
 	
 	function displaySendingMessage() {
 		alert('Данные добавлены!!!');
@@ -219,5 +215,9 @@
 		window.backend.save(data, displaySendingMessage, window.gallery.errorMessage);
 	}
 	uploadFormSubmit.addEventListener('submit', uploadFofmSubmitHandler);
+	
+	window.form = {
+		escKeydownHandler: escKeydownHandler
+	}
 	
 })();
