@@ -1,6 +1,7 @@
 (function () {
 	// часть первая
 	var pictures = document.querySelector('.pictures ');
+	
 function errorMessage(error) {
 	alert(error);
 }
