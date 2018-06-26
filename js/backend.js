@@ -16,6 +16,9 @@ function dataRequest (loadHandler, errorHandler) {
       case 404:
         error = 'Упс!!! ничего нет';
         break;
+	    case 500:
+		    error = 'Внутренняя ошибка сервера';
+		    break;
       default:
         error = 'Статус ответа: :' + xhr.status + ' ' + xhr.statusText;
     }
@@ -40,7 +43,7 @@ function dataRequest (loadHandler, errorHandler) {
   
   function save(datas, loadHandler, errorHandler) {
   var xhr  = dataRequest(loadHandler, errorHandler);
-  xhr.open('POST',data.URL);
+  xhr.open('POST', data.URL);
   xhr.send(datas);
   }
   window.backend = {

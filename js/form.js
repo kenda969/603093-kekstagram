@@ -1,3 +1,4 @@
+'use strict';
 (function () {
 	var uploadOverlay = document.querySelector('.upload-overlay');
 	var uploadFile = document.querySelector('#upload-file');
@@ -7,21 +8,18 @@
 	function uploadFileChangeHandler () {
 		uploadOverlay.classList.remove('hidden');
 	}
-	uploadFile.addEventListener('change',uploadFileChangeHandler);
-
+	
 //закрытие редактора фото.
 	function escKeydownHandler(evt){
 		if(evt.keyCode === data.ESC){
 			uploadOverlay.classList.add('hidden');
 		}
 	}
-	document.addEventListener('keydown',escKeydownHandler);
 	
 	function uploadFormCancelClickHandler() {
 		uploadOverlay.classList.add('hidden');
 	}
-	uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
-
+	
 //Редактирование размера фотографии.
 	var sizeDefault = 50;
 	var uploadResizeControls = document.querySelector('.upload-resize-controls');
@@ -45,8 +43,7 @@
 		}
 		uploadFormPreview.style.transform = 'scale(' + sizeDefault / 100 +')';
 	}
-	uploadResizeControls.addEventListener('click',  uploadResizeControlsClickHandler);
-
+	
 // Применение эффекта для избражений
 	var uploadEffectLevel = document.querySelector('.upload-effect-level');
 	var uploadEffectLevelLine = document.querySelector('.upload-effect-level-line');
@@ -68,7 +65,7 @@
 		}
 		return;
 	}
-	uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
+	
 	
 	function scrollDefaultPin(className) {
 		var posicionPin;
@@ -199,25 +196,37 @@
 		document.addEventListener('mousemove',uploadEffectLevelPinMousemove);
 		document.addEventListener('mouseup', uploadEffectLevelPinMouseupHandler);
 	}
-	uploadEffectLevelPin.addEventListener('mousedown', uploadEffectLevelPinMousedovn );
 	
-
 	
 	var uploadFormSubmit = document.querySelector('.upload-form');
 	
-	function displaySendingMessage() {
-		alert('Данные добавлены!!!');
-	}
-	
+	//Отправка формы на сервер
 	function uploadFofmSubmitHandler(evt) {
 		evt.preventDefault();
 		var data = new FormData(uploadFormSubmit);
-		window.backend.save(data, displaySendingMessage, window.gallery.errorMessage);
+		backend.save(data, displaySendingMessage, gallery.errorMessage);
+		uploadOverlay.classList.add('hidden');
+		document.querySelector('.upload-form-hashtags').value = '';
+		document.querySelector('.upload-form-description').value = '';
 	}
-	uploadFormSubmit.addEventListener('submit', uploadFofmSubmitHandler);
+	
+	// Вывод сообщения
+	function displaySendingMessage() {
+		message.message('Фото добавленно!!!');
+	}
 	
 	window.form = {
 		escKeydownHandler: escKeydownHandler
 	}
+	
+	uploadFile.addEventListener('change',uploadFileChangeHandler);
+	document.addEventListener('keydown',escKeydownHandler);
+	uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
+	uploadResizeControls.addEventListener('click',  uploadResizeControlsClickHandler);
+	uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
+	uploadEffectLevelPin.addEventListener('mousedown', uploadEffectLevelPinMousedovn );
+	uploadFormSubmit.addEventListener('submit', uploadFofmSubmitHandler);
+	
+
 	
 })();

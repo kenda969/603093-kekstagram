@@ -4,14 +4,18 @@ function message(mess) {
 	var paragraf = document.createElement('p');
 	var button = document.createElement('button');
 	document.body.insertAdjacentElement('afterbegin', node);
-	node.style = ' z-index: 100px; border-radius: 5px; width: 200px; position: absolute; left: 45%; top: 40%; background-color: #969696; ';
-	// node.innerHTML = '<p style="text-align: center; ">' + errorMessage + '</p>';
+	node.style = ' z-index: 100; border-radius: 5px; width: 200px; position: fixed; left: 45%; top: 40%; background-color: #969696; ';
 	paragraf.style = 'text-align: center; color: #fff;';
 	paragraf.textContent = mess;
-	button.style = 'background-color: #6AA0E2; margin: 0 0 10px 65p; border: none; border-radius: 5px; color: #ccc;';
+	button.style = 'background-color: #6AA0E2; margin: 0 0 10px 65px; border: none; border-radius: 5px; color: #ccc;';
 	button.textContent = 'закрыть';
 	node.appendChild(paragraf);
 	node.appendChild(button);
+	button.addEventListener('click', function () {
+		document.body.removeChild(node);
+	});
 }
-message('загруженно');
+window.message = {
+	message: message
+}
 })();

@@ -1,24 +1,25 @@
+'use strict';
 (function () {
-	// часть первая
 	var pictures = document.querySelector('.pictures ');
 	
 function errorMessage(error) {
-	alert(error);
+	message.message(error);
 }
 	
 	var fragment = document.createDocumentFragment();
 	function loadData(advert) {
-    for (var i = 1; i < advert.length; i++){
-      fragment.appendChild(window.renderPictures(advert[i]));
-    }
+ 
+		advert.forEach(function (arr) {
+			fragment.appendChild(window.renderPictures(arr));
+		})
     pictures.appendChild(fragment);
   }
-	
-	window.backend.load(loadData,errorMessage);
 	
 	window.gallery = {
 		errorMessage: errorMessage
 	}
+	
+	backend.load(loadData,errorMessage);
 	
 })();
 
