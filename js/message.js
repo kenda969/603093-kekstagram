@@ -4,7 +4,7 @@ function message(mess) {
 	var paragraf = document.createElement('p');
 	var button = document.createElement('button');
 	document.body.insertAdjacentElement('afterbegin', node);
-	node.style = ' z-index: 100; border-radius: 5px; width: 200px; position: fixed; left: 45%; top: 40%; background-color: #969696; ';
+	node.style = ' z-index: 100; border-radius: 5px; width: 200px; position: fixed; left: 43.8%; top: 40%; background-color: #969696; ';
 	paragraf.style = 'text-align: center; color: #fff;';
 	paragraf.textContent = mess;
 	button.style = 'background-color: #6AA0E2; margin: 0 0 10px 65px; border: none; border-radius: 5px; color: #ccc;';

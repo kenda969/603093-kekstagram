@@ -227,6 +227,4 @@
 	uploadEffectLevelPin.addEventListener('mousedown', uploadEffectLevelPinMousedovn );
 	uploadFormSubmit.addEventListener('submit', uploadFofmSubmitHandler);
 	
-
-	
 })();
