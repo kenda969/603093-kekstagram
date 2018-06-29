@@ -56,24 +56,49 @@
 	
 	function uploadEffectControlsClickHandler(evt) {
 		var uploadEffectControlsValue = evt.target.value;
-		var className = 'effect-' + uploadEffectControlsValue;
+		console.log(evt.target.name);
+		var name = uploadFormPreview.name =  uploadEffectControlsValue;
 		if(uploadEffectControlsValue){
-			uploadFormPreview.className = className;
-			uploadFormPreview.style.removeProperty('filter');
-			uploadEffectLevelPin.style.left = scrollDefaultPin(className);
-			uploadEffectLevelVal.style.width = scrollDefaultPin(className);
+			uploadFormPreview.style.filter = effectImageFilter(name) + effectImageFilterDefault(name);
+			uploadEffectLevelPin.style.left = scrollDefaultPin(name);
+			uploadEffectLevelVal.style.width = scrollDefaultPin(name);
 		}
 		return;
 	}
 	
+	function effectImageFilterDefault(name) {
+		var defaultFilter;
+		
+			switch (name){
+			case 'chrome':
+				defaultFilter= '(1)';
+				break;
+			case 'sepia':
+				defaultFilter = '(1)';
+				break;
+			case 'marvin':
+				defaultFilter = '(100%)';
+				break;
+			case 'phobos':
+				defaultFilter = '(5px)';
+				break;
+			case 'heat':
+				defaultFilter = '(3)';
+				break;
+			case 'none':
+				defaultFilter = '';
+				break;
+			}
+				return defaultFilter;
+	}
 	
-	function scrollDefaultPin(className) {
+	function scrollDefaultPin(name) {
 		var posicionPin;
-		switch (className){
-			case 'effect-none':
+		switch (name){
+			case 'none':
 				posicionPin = '0';
 				break;
-			case 'effect-phobos':
+			case 'phobos':
 				posicionPin = '50%';
 				break;
 			default:
@@ -83,26 +108,26 @@
 		return posicionPin;
 	}
 	
-	function effectImageFilter (className) {
+	function effectImageFilter (name) {
 		var imageFilter;
 		
-		switch (className){
-			case 'effect-chrome':
+		switch (name){
+			case 'chrome':
 				imageFilter = 'grayscale';
 				break;
-			case 'effect-sepia':
+			case 'sepia':
 				imageFilter = 'sepia';
 				break;
-			case 'effect-marvin':
+			case 'marvin':
 				imageFilter = 'invert';
 				break;
-			case 'effect-phobos':
+			case 'phobos':
 				imageFilter = 'blur';
 				break;
-			case 'effect-heat':
+			case 'heat':
 				imageFilter = 'brightness';
 				break;
-			case 'effect-none':
+			case 'none':
 				imageFilter = 'none';
 				break;
 		}
@@ -146,9 +171,9 @@
 //Применение светофильтров
 	function beginColorFilters (shift){
 		var colorFilter = percentageNum(uploadEffectLevelPin.offsetLeft - shift,uploadEffectLevelLine.offsetWidth - (data.PIN_WIDTH / 2));
-		var className = uploadFormPreview.className;
-		uploadFormPreview.style.filter = effectImageFilter(className) +
-			'('+ effectImageFilterSaturate(effectImageFilter(className), colorFilter) +')';
+		var name = uploadFormPreview.name;
+		uploadFormPreview.style.filter = effectImageFilter(name) +
+			'('+ effectImageFilterSaturate(effectImageFilter(name), colorFilter) +')';
 	}
 
 // Перетаскивание пина

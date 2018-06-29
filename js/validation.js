@@ -17,11 +17,12 @@
 // Проверка длинны  элементов массива. Не более 20 символов.
 //  И наличие символа #.
 	function checkLengthArrayElement(arr) {
+		
 		 if(arr != "") {
 			for (i = 0; i < arr.length; i++) {
-				var a = arr[i].match(/#/ig);
+				var a = arr[i].split('');
 				var mess = '\r\n' + arr[i];
-				if (a != '#') {
+				if (a[0] != '#') {
 					uploadForm.hashtags.style.borderColor = 'red';
 					message.message('Отсутствует символ # в теге' + mess + ' !!!');
 				} else if (arr[i].length > 20) {
@@ -33,7 +34,6 @@
 				}
 			}
 		}
-		// И проверка на наличие # в теге.
 	}
 
 // Проверка элементов массива на идентичные записи не регистрозависимые..
