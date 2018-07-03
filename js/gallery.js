@@ -13,11 +13,10 @@
 			fragment.appendChild(window.renderPictures(arr));
 		});
     pictures.appendChild(fragment);
+    filter.initFilters(advert);
   }
 	
-	window.gallery = {
-		errorMessage: errorMessage
-	};
+	window.gallery = {errorMessage: errorMessage};
 	
 	backend.load(loadData,errorMessage);
 	
