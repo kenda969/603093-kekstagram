@@ -26,6 +26,7 @@
 	
 //Редактирование размера фотографии.
 	var sizeDefault = 50;
+	
 	var uploadResize = {
 		controls: document.querySelector('.upload-resize-controls'),
     controlsButtonDec: 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-dec',
@@ -57,6 +58,7 @@
 		levelPin: document.querySelector('.upload-effect-level-pin'),
 		levelVal: document.querySelector('.upload-effect-level-val')
 	};
+	
 	uploadEffect.levelPin.style.left = '0';
 	uploadEffect.levelVal.style.width = '0';
 
@@ -208,6 +210,7 @@
 	//Отправка формы на сервер
 	function uploadFofmSubmitHandler(evt) {
 		evt.preventDefault();
+		
 		var data = new FormData(uploadFormSubmit);
 		backend.save(data, displaySendingMessage, gallery.errorMessage);
 		upload.overlay.classList.add('hidden');
@@ -215,10 +218,15 @@
 		document.querySelector('.upload-form-description').value = '';
 	}
 	
+	
 	// Вывод сообщения
 	function displaySendingMessage() {
 		message.message('Фото добавленно!!!');
 	}
+	
+	window.form = {
+		escKeydownHandler: escKeydownHandler
+	};
 	
 	upload.file.addEventListener('change',uploadFileChangeHandler);
 	document.addEventListener('keydown',escKeydownHandler);
@@ -227,9 +235,7 @@
 	uploadEffect.controls.addEventListener('click',uploadEffectControlsClickHandler);
 	uploadEffect.levelPin.addEventListener('mousedown', uploadEffectLevelPinMousedovn );
 	uploadFormSubmit.addEventListener('submit', uploadFofmSubmitHandler);
-
-  window.form = {
-    escKeydownHandler: escKeydownHandler
-  }
+	
+	
 	
 })();

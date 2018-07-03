@@ -1,8 +1,10 @@
 (function () {
 	var uploadForm = {
 		hashtags: document.querySelector('.upload-form-hashtags'),
-		description: document.querySelector('.upload-form-description')
+		description: document.querySelector('.upload-form-description'),
+		button: document.querySelector('.upload-form-submit')
 	};
+	uploadForm.button.style.cursor = 'pointer';
 
 // Проверка длинны массива. Не более 5 хэштэгов.
 	function checkLengthArray(arr) {
@@ -56,12 +58,14 @@
 		checkMatchingArrayElement(uploadFormHashtagsValue);
 	}
 
+	
 // Обработка коментария на валидность.
 	function uploadFormDescriptionChangeHandler (){
 		var uploadFormDescriptionValue = this.value;
 		if (uploadFormDescriptionValue.length > 140){
 			message.message('Ваш комментарий слишком большой!!!');
 			uploadForm.description.style.borderColor = 'red';
+			
 		}else {
 			uploadForm.description.style.borderColor = '';
 		}
@@ -69,6 +73,12 @@
 	
 	uploadForm.hashtags.addEventListener('change', uploadFormHashtagsChangeHandler);
 	uploadForm.description.addEventListener('change',uploadFormDescriptionChangeHandler);
+	
+	window.validation = {
+		hashtags:  uploadFormHashtagsChangeHandler,
+		description:  uploadFormDescriptionChangeHandler,
+		buttonSubmit: uploadForm.button
+	} ;
 	
 	// Отмена события по нажатию на кнопку ESC при фокусе в поле комментарий.
 	uploadForm.description.addEventListener('focus', function () {
