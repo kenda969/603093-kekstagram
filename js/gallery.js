@@ -8,12 +8,12 @@
 	
 	var fragment = document.createDocumentFragment();
 
-	function loadData(advert) {
-		advert.forEach(function (arr) {
+	function loadData(photoGallery) {
+		photoGallery.forEach(function (arr) {
 			fragment.appendChild(window.renderPictures(arr));
 		});
     pictures.appendChild(fragment);
-    filter.initFilters(advert);
+    filter.initFilters(photoGallery);
   }
 	
 	window.gallery = {errorMessage: errorMessage};

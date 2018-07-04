@@ -19,11 +19,11 @@
 // Проверка длинны  элементов массива. Не более 20 символов.
 //  И наличие символа #.
 	function checkLengthArrayElement(arr) {
-		 if(arr != "") {
+		 if(arr !== "") {
 			for (i = 0; i < arr.length; i++) {
 				var a = arr[i].split('');
 				var mess = '\r\n' + arr[i];
-				if (a[0] != '#') {
+				if (a[0] !== '#') {
 					uploadForm.hashtags.style.borderColor = 'red';
 					message.message('Отсутствует символ # в теге' + mess + ' !!!');
 				} else if (arr[i].length > 20) {
