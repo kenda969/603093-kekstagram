@@ -13,7 +13,6 @@
     filterPopular(photoGallery);
     filters.classList.remove('filters-inactive');
   }
-  
   function filterData(photoGallery) {
     
     var imageComments = photoGallery.map(function (comment){
@@ -22,14 +21,14 @@
     
     
   }
-  
+  // Фильтр (ПОПУЛЯРНЫЕ) функция возвращает новый массив отсортированный по лайкам(порода собаки ;))) ).
   function filterPopular(photoGallery) {
-
+    var popularPhoto = [];
+    var obj;
 	  var imageLikes = photoGallery.map(function (likes) {
 		  return likes.likes;
 	  });
-    
-    
+
 		  // Сортировка расчесткой.
 	    var interval = Math.floor(imageLikes.length / 1.3);
 	
@@ -43,10 +42,21 @@
 		    }
 		    interval = Math.floor(interval / 1.3);
 	    }
-	  var imageFilter = photoGallery.filter(function (likes) {
-		  return likes.likes === '49';
-	  });
-	    console.log(imageFilter);
+
+      // созлание нового массива.
+	    for(i = 0; i < photoGallery.length; i++){
+	      for(var j = 0; j < photoGallery.length; j++){
+          if(imageLikes[0] === photoGallery[j].likes){
+            popularPhoto.push(obj = {
+              url: photoGallery[j].url,
+              likes: photoGallery[j].likes,
+              comments: photoGallery[j].comments
+            });
+            imageLikes.shift(i);
+          }
+        }
+      }
+      return popularPhoto;
   }
 
   window.filter = {
