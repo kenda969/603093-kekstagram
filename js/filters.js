@@ -2,23 +2,36 @@
   var filters = document.querySelector('.filters');
 
   var filterCallback = function () {
-    var errorMes = 'you must registre callback by onFilterChange';
-    return errorMes;
+    var errorMess = 'you must registre callback by onFilterChange';
+    return errorMess;
   };
 
   // Отображение фильтров после загрузки данных с сервера.
   function filterInit(photoGallery) {
-    filterData(photoGallery);
+    filterComments(photoGallery);
     filterCallback = photoGallery;
     filterPopular(photoGallery);
     filters.classList.remove('filters-inactive');
   }
-  function filterData(photoGallery) {
+  function filterComments(photoGallery) {
     
     var imageComments = photoGallery.map(function (comment){
       return comment.comments;
     });
-    
+    var q;
+    for(var i = 0; i < imageComments.length; i++){
+
+       q = imageComments[i];
+       console.log(q);
+
+    }
+
+
+
+
+    // sortingUseComb(imageCommentsItem);
+
+
     
   }
   // Фильтр (ПОПУЛЯРНЫЕ) функция возвращает новый массив отсортированный по лайкам(порода собаки ;))) ).
@@ -29,22 +42,10 @@
 		  return likes.likes;
 	  });
 
-		  // Сортировка расчесткой.
-	    var interval = Math.floor(imageLikes.length / 1.3);
-	
-	    while (interval > 0) {
-		    for(var i = 0; i + interval < imageLikes.length; i += 1) {
-			    if (imageLikes[i] < imageLikes[i + interval]) {
-				    var small = imageLikes[i + interval];
-				    imageLikes[i + interval] = imageLikes[i];
-				    imageLikes[i] = small;
-			    }
-		    }
-		    interval = Math.floor(interval / 1.3);
-	    }
+	  sortingUseComb(imageLikes);
 
-      // созлание нового массива.
-	    for(i = 0; i < photoGallery.length; i++){
+      // создание нового массива.
+	    for(var i = 0; i < photoGallery.length; i++){
 	      for(var j = 0; j < photoGallery.length; j++){
           if(imageLikes[0] === photoGallery[j].likes){
             popularPhoto.push(obj = {
@@ -57,6 +58,24 @@
         }
       }
       return popularPhoto;
+  }
+  // Сортировка расчесткой.
+  function sortingUseComb(arr) {
+
+      var interval = Math.floor(arr.length / 1.3);
+
+      while (interval > 0) {
+        for(var i = 0; i + interval < arr.length; i += 1) {
+          if (arr[i] < arr[i + interval]) {
+            var small = arr[i + interval];
+            arr[i + interval] = arr[i];
+            arr[i] = small;
+          }
+        }
+        interval = Math.floor(interval / 1.3);
+
+
+    }
   }
 
   window.filter = {
