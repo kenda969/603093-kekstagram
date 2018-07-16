@@ -42,15 +42,11 @@
     var photoRandom = [];
     var photoRand;
     for(var i = 0; i < photoGallery.length; i++){
-     photoRand = Math.floor(Math.random() * copyPhoto.length);
-      photoRandom.push(copyPhoto[photoRand]);
-      copyPhoto.splice(copyPhoto[photoRand]);
-
-
+	     photoRand = Math.floor(Math.random() * copyPhoto.length);
+	     photoRandom.push(copyPhoto[photoRand]);
+       copyPhoto.splice(photoRand,1);
     }
-    console.log(photoRandom);
     return photoRandom;
-
   }
 
   window.filter = {
