@@ -1,6 +1,8 @@
 (function () {
   var filters = document.querySelector('.filters');
 
+
+
   var filterCallback = function () {
     var errorMess = 'you must registre callback by onFilterChange';
     return errorMess;
@@ -49,7 +51,30 @@
     return photoRandom;
   }
 
-  window.filter = {
-    initFilters: filterInit
-  };
+  function filtersMouseupHahdler(evt, photoGallery) {
+    var value = evt.target.control.defaultValue;
+    getFiltersArr(value, photoGallery);
+  }
+
+  function getFiltersArr(vle, photoGallery) {
+    var filtersArr;
+    switch(vle){
+      case 'recommend':
+        filtersArr = photoGallery;
+        break;
+      case 'popular':
+        filtersArr = filterPopular(photoGallery);
+        break;
+      case  'discussed':
+        filtersArr = filterDiscussed(photoGallery);
+        break;
+      case  'random':
+        filtersArr = filterRandom(photoGallery);
+        break;
+    }
+    return filtersArr;
+  }
+  filters.addEventListener('mouseup', filtersMouseupHahdler);
+
+  window.filter = {initFilters: filterInit};
 })();

@@ -8,7 +8,10 @@
 	
 	var fragment = document.createDocumentFragment();
 
+
+
 	function loadData(photoGallery) {
+
 		photoGallery.forEach(function (arr) {
 			fragment.appendChild(window.renderPictures(arr));
 		});

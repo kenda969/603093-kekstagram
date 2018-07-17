@@ -78,7 +78,7 @@
 		hashtags:  uploadFormHashtagsChangeHandler,
 		description:  uploadFormDescriptionChangeHandler,
 		buttonSubmit: uploadForm.button
-	} ;
+	};
 	
 	// Отмена события по нажатию на кнопку ESC при фокусе в поле комментарий.
 	uploadForm.description.addEventListener('focus', function () {

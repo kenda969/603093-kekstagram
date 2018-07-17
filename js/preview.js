@@ -30,7 +30,7 @@
 				url: target.src,
 				comments: target.parentNode.children['1'].children['0'].innerText,
 				likes: target.parentNode.children['1'].children['1'].innerText
-		}
+		};
 		
 	if(target.tagName === 'IMG'){
 		renderGaleryOverlay(overlayData);
@@ -39,7 +39,7 @@
 	    gallery.overlay.style.display ='none';
   });
 }
-return;
+		return;
   }
   
   container.addEventListener('click', renderOverlay);
