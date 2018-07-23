@@ -1,114 +1,121 @@
 'use strict';
 (function () {
-	var uploadOverlay = document.querySelector('.upload-overlay');
-	var uploadFile = document.querySelector('#upload-file');
-	var uploadFormCancel = document.querySelector('.upload-form-cancel');
+
+	var upload = {
+		overlay: document.querySelector('.upload-overlay'),
+		file: document.querySelector('#upload-file'),
+		formCancel: document.querySelector('.upload-form-cancel'),
+		formPreview: document.querySelector('.upload-form-preview > img')
+	};
 
 // отображение редактора фото , после того как фото было загружено.
 	function uploadFileChangeHandler () {
-		uploadOverlay.classList.remove('hidden');
+		upload.overlay.classList.remove('hidden');
 	}
 	
 //закрытие редактора фото.
 	function escKeydownHandler(evt){
 		if(evt.keyCode === data.ESC){
-			uploadOverlay.classList.add('hidden');
+      upload.overlay.classList.add('hidden');
 		}
 	}
 	
 	function uploadFormCancelClickHandler() {
-		uploadOverlay.classList.add('hidden');
+    upload.overlay.classList.add('hidden');
 	}
 	
 //Редактирование размера фотографии.
 	var sizeDefault = 50;
-	var uploadResizeControls = document.querySelector('.upload-resize-controls');
-	var uploadResizeControlsButtonDec = 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-dec';
-	var uploadResizeControlsButtonInc = 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-inc';
-	var uploadResizeControlsValue = uploadResizeControls.querySelector('.upload-resize-controls-value');
-	var uploadFormPreview = document.querySelector('.upload-form-preview > img');
 	
-	uploadResizeControlsValue.value = sizeDefault + '%';
-	uploadFormPreview.style.transform = 'scale(' + sizeDefault / 100 +')';
+	var uploadResize = {
+		controls: document.querySelector('.upload-resize-controls'),
+    controlsButtonDec: 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-dec',
+    controlsButtonInc: 'upload-resize-control upload-resize-controls-button upload-resize-controls-button-inc',
+    controlsValue: document.querySelector('.upload-resize-controls-value')
+	};
+	
+	uploadResize.controlsValue.value = sizeDefault + '%';
+	upload.formPreview.style.transform = 'scale(' + sizeDefault / 100 +')';
 	
 	function uploadResizeControlsClickHandler(evt) {
 		var className = evt.target.className;
 		
-		if(className === uploadResizeControlsButtonInc){
+		if(className === uploadResize.controlsButtonInc){
 			sizeDefault !== 100 ? sizeDefault += 25:sizeDefault = 100;
-			uploadResizeControlsValue.value = sizeDefault + '%';
-		}else if (className === uploadResizeControlsButtonDec){
+      uploadResize.controlsValue.value = sizeDefault + '%';
+		}else if (className === uploadResize.controlsButtonDec){
 			sizeDefault <= 25 ? sizeDefault = 25:sizeDefault -= 25;
-			uploadResizeControlsValue.value = sizeDefault + '%';
+      uploadResize.controlsValue.value = sizeDefault + '%';
 		}
-		uploadFormPreview.style.transform = 'scale(' + sizeDefault / 100 +')';
+		upload.formPreview.style.transform = 'scale(' + sizeDefault / 100 +')';
 	}
 	
 // Применение эффекта для избражений
-	var uploadEffectLevel = document.querySelector('.upload-effect-level');
-	var uploadEffectLevelLine = document.querySelector('.upload-effect-level-line');
-	var uploadEffectLevelPin = uploadEffectLevel.querySelector('.upload-effect-level-pin');
-	var uploadEffectLevelVal = uploadEffectLevel.querySelector('.upload-effect-level-val');
-	var uploadEffectControls = document.querySelector('.upload-effect-controls');
+	var uploadEffect = {
+		controls: document.querySelector('.upload-effect-controls'),
+		level: document.querySelector('.upload-effect-level'),
+		levelLine: document.querySelector('.upload-effect-level-line'),
+		levelPin: document.querySelector('.upload-effect-level-pin'),
+		levelVal: document.querySelector('.upload-effect-level-val')
+	};
 	
-	uploadEffectLevelPin.style.left = '0';
-	uploadEffectLevelVal.style.width = '0';
-	
-	function uploadEffectControlsClickHandler(evt) {
-		var uploadEffectControlsValue = evt.target.value;
-		var className = 'effect-' + uploadEffectControlsValue;
-		if(uploadEffectControlsValue){
-			uploadFormPreview.className = className;
-			uploadFormPreview.style.removeProperty('filter');
-			uploadEffectLevelPin.style.left = scrollDefaultPin(className);
-			uploadEffectLevelVal.style.width = scrollDefaultPin(className);
-		}
-		return;
-	}
-	
-	
-	function scrollDefaultPin(className) {
-		var posicionPin;
-		switch (className){
-			case 'effect-none':
-				posicionPin = '0';
-				break;
-			case 'effect-phobos':
-				posicionPin = '50%';
-				break;
-			default:
-				posicionPin = '100%';
-				break;
-		}
-		return posicionPin;
-	}
-	
-	function effectImageFilter (className) {
-		var imageFilter;
-		
-		switch (className){
-			case 'effect-chrome':
-				imageFilter = 'grayscale';
-				break;
-			case 'effect-sepia':
-				imageFilter = 'sepia';
-				break;
-			case 'effect-marvin':
-				imageFilter = 'invert';
-				break;
-			case 'effect-phobos':
-				imageFilter = 'blur';
-				break;
-			case 'effect-heat':
-				imageFilter = 'brightness';
-				break;
-			case 'effect-none':
-				imageFilter = 'none';
-				break;
-		}
-		return imageFilter;
-	}
-	
+	uploadEffect.levelPin.style.left = '0';
+	uploadEffect.levelVal.style.width = '0';
+
+  function uploadEffectControlsClickHandler(evt) {
+    var uploadEffectControlsValue = evt.target.value;
+    var className = 'effect-' + uploadEffectControlsValue;
+    if(uploadEffectControlsValue){
+      upload.formPreview.className = className;
+      upload.formPreview.style.removeProperty('filter');
+      uploadEffect.levelPin.style.left = scrollDefaultPin(className);
+      uploadEffect.levelVal.style.width = scrollDefaultPin(className);
+    }
+    return;
+  }
+
+
+  function scrollDefaultPin(className) {
+    var posicionPin;
+    switch (className){
+      case 'effect-none':
+        posicionPin = '0';
+        break;
+      case 'effect-phobos':
+        posicionPin = '50%';
+        break;
+      default:
+        posicionPin = '100%';
+        break;
+    }
+    return posicionPin;
+  }
+
+  function effectImageFilter (className) {
+    var imageFilter;
+
+    switch (className){
+      case 'effect-chrome':
+        imageFilter = 'grayscale';
+        break;
+      case 'effect-sepia':
+        imageFilter = 'sepia';
+        break;
+      case 'effect-marvin':
+        imageFilter = 'invert';
+        break;
+      case 'effect-phobos':
+        imageFilter = 'blur';
+        break;
+      case 'effect-heat':
+        imageFilter = 'brightness';
+        break;
+      case 'effect-none':
+        imageFilter = 'none';
+        break;
+    }
+    return imageFilter;
+  }
 	function effectImageFilterSaturate(effectFilter, numFilter) {
 		var saturate;
 		var x;
@@ -145,9 +152,9 @@
 
 //Применение светофильтров
 	function beginColorFilters (shift){
-		var colorFilter = percentageNum(uploadEffectLevelPin.offsetLeft - shift,uploadEffectLevelLine.offsetWidth - (data.PIN_WIDTH / 2));
-		var className = uploadFormPreview.className;
-		uploadFormPreview.style.filter = effectImageFilter(className) +
+		var colorFilter = percentageNum(uploadEffect.levelPin.offsetLeft - shift,uploadEffect.levelLine.offsetWidth - (data.PIN_WIDTH / 2));
+		var className = upload.formPreview.className;
+		upload.formPreview.style.filter = effectImageFilter(className) +
 			'('+ effectImageFilterSaturate(effectImageFilter(className), colorFilter) +')';
 	}
 
@@ -174,22 +181,22 @@
 				y: moveEvt.clientY
 			};
 			
-			uploadEffectLevelPin.style.left = uploadEffectLevelPin.offsetLeft - shift.x +'px';
-			uploadEffectLevelVal.style.width = uploadEffectLevelPin.offsetLeft - shift.x +'px';
+			uploadEffect.levelPin.style.left = uploadEffect.levelPin.offsetLeft - shift.x +'px';
+			uploadEffect.levelVal.style.width = uploadEffect.levelPin.offsetLeft - shift.x +'px';
 			
-			if (uploadEffectLevelPin.offsetLeft - shift.x < data.PIN_WIDTH / 2){
-				uploadEffectLevelPin.style.left = data.PIN_WIDTH / 2 +'px';
-				uploadEffectLevelVal.style.width = data.PIN_WIDTH / 2 +'px';
-			}else if(uploadEffectLevelPin.offsetLeft - shift.x > uploadEffectLevelLine.offsetWidth - (data.PIN_WIDTH / 2)){
-				uploadEffectLevelPin.style.left = uploadEffectLevelLine.offsetWidth - (data.PIN_WIDTH / 2) + 'px';
-				uploadEffectLevelVal.style.width = uploadEffectLevelLine.offsetWidth - (data.PIN_WIDTH / 2) + 'px';
+			if (uploadEffect.levelPin.offsetLeft - shift.x < data.PIN_WIDTH / 2){
+				uploadEffect.levelPin.style.left = data.PIN_WIDTH / 2 +'px';
+				uploadEffect.levelVal.style.width = data.PIN_WIDTH / 2 +'px';
+			}else if(uploadEffect.levelPin.offsetLeft - shift.x > uploadEffect.levelLine.offsetWidth - (data.PIN_WIDTH / 2)){
+				uploadEffect.levelPin.style.left = uploadEffect.levelLine.offsetWidth - (data.PIN_WIDTH / 2) + 'px';
+				uploadEffect.levelVal.style.width = uploadEffect.levelLine.offsetWidth - (data.PIN_WIDTH / 2) + 'px';
 			}
 			
 			beginColorFilters(shift.x);
 		}
 		function uploadEffectLevelPinMouseupHandler(upEvt) {
 			upEvt.preventDefault();
-			
+
 			document.removeEventListener('mousemove',uploadEffectLevelPinMousemove);
 			document.removeEventListener('mouseup', uploadEffectLevelPinMouseupHandler);
 		}
@@ -203,12 +210,14 @@
 	//Отправка формы на сервер
 	function uploadFofmSubmitHandler(evt) {
 		evt.preventDefault();
+		
 		var data = new FormData(uploadFormSubmit);
 		backend.save(data, displaySendingMessage, gallery.errorMessage);
-		uploadOverlay.classList.add('hidden');
+		upload.overlay.classList.add('hidden');
 		document.querySelector('.upload-form-hashtags').value = '';
 		document.querySelector('.upload-form-description').value = '';
 	}
+	
 	
 	// Вывод сообщения
 	function displaySendingMessage() {
@@ -217,16 +226,16 @@
 	
 	window.form = {
 		escKeydownHandler: escKeydownHandler
-	}
+	};
 	
-	uploadFile.addEventListener('change',uploadFileChangeHandler);
+	upload.file.addEventListener('change',uploadFileChangeHandler);
 	document.addEventListener('keydown',escKeydownHandler);
-	uploadFormCancel.addEventListener('click',uploadFormCancelClickHandler);
-	uploadResizeControls.addEventListener('click',  uploadResizeControlsClickHandler);
-	uploadEffectControls.addEventListener('click',uploadEffectControlsClickHandler);
-	uploadEffectLevelPin.addEventListener('mousedown', uploadEffectLevelPinMousedovn );
+	upload.formCancel.addEventListener('click',uploadFormCancelClickHandler);
+	uploadResize.controls.addEventListener('click',  uploadResizeControlsClickHandler);
+	uploadEffect.controls.addEventListener('click',uploadEffectControlsClickHandler);
+	uploadEffect.levelPin.addEventListener('mousedown', uploadEffectLevelPinMousedovn );
 	uploadFormSubmit.addEventListener('submit', uploadFofmSubmitHandler);
 	
-
+	
 	
 })();
